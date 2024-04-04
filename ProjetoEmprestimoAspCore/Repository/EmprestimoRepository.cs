@@ -1,4 +1,5 @@
-﻿using ProjetoEmprestimoAspCore.Models;
+﻿using MySql.Data.MySqlClient;
+using ProjetoEmprestimoAspCore.Models;
 using ProjetoEmprestimoAspCore.Repository.Contrato;
 
 namespace ProjetoEmprestimoAspCore.Repository
@@ -17,12 +18,35 @@ namespace ProjetoEmprestimoAspCore.Repository
 
         public void buscarUltimoEmp(Emprestimo emprestimo)
         {
-            throw new NotImplementedException();
+            using (var conexao = new MySqlConnection(_Conexao))
+            {
+                conexao.Open();
+                MySqlDataReader dr;
+
+                MySqlCommand cmd = new MySqlCommand("SELECT idempre FROM emprestimo_tb ORDER BY idempre DESC LIMIT 1;", conexao);
+                MySqlDataAdapter mySqlDataAdapter  = new MySqlDataAdapter(cmd);
+                dr = cmd.ExecuteReader();
+                while(dr.Read())
+                {
+                    emprestimo.idEmpre = (int)dr[0];//dr[0].ToString();
+                }
+                conexao.Close();
+            }
         }
 
         public void Cadastrar(Emprestimo emprestimo)
         {
-            throw new NotImplementedException();
+            using (var conexao = new MySqlConnection(_Conexao))
+            {
+                conexao.Open();
+
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO emprestimo_tb VALUES(default,@dataemp,@datadev,@idusuario);", conexao);
+                cmd.Parameters.Add("@dataemp", MySqlDbType.VarChar).Value = emprestimo.dataEmpre;
+                cmd.Parameters.Add("@datadev", MySqlDbType.VarChar).Value = emprestimo.dataDev;
+                cmd.Parameters.Add("@idusuario", MySqlDbType.VarChar).Value = emprestimo.idUsuario;
+                cmd.ExecuteNonQuery();
+                conexao.Close();
+            }
         }
 
         public void Deletar(int idEmpre)
