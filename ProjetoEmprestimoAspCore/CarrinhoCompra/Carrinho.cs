@@ -22,7 +22,72 @@ namespace ProjetoEmprestimoAspCore.CarrinhoCompra
         }
         public List<Livro> Consultar()
         {
-            return 
+            if (_cookie.Existe(Key))
+            {
+                string valor = _cookie.Consultar(Key);
+                return JsonConvert.DeserializeObject<List<Livro>>(valor);
+            }
+            else
+            {
+                return new List<Livro>();
+            }
+        }
+        public void Cadastrar(Livro item)
+        {
+            List<Livro> Lista;
+            if (_cookie.Existe(Key))
+            {
+                Lista = Consultar();
+                var ItemLocalizado = Lista.SingleOrDefault(a => a.idLivro == item.idLivro);
+
+                if(ItemLocalizado != null)
+                {
+                    ItemLocalizado.qtd = item.qtd;
+                }
+                else
+                {
+                    Lista.Add(item);
+                }
+            }
+            else
+            {
+                Lista = new List<Livro>{};
+                Lista.Add(item);
+            }
+            Salvar(Lista);
+        }
+        public void Atualizar(Livro item)
+        {
+            var Lista = Consultar();
+            var ItemLocalizado = Lista.SingleOrDefault(a => a.idLivro == item.idLivro);
+            if(ItemLocalizado != null)
+            {
+                ItemLocalizado.qtd = item.qtd + 1;
+                Salvar(Lista);
+            }
+        }
+        public void Remover(Livro item)
+        {
+            var Lista = Consultar();
+            var ItemLocalizado = Lista.SingleOrDefault(a => a.idLivro == item.idLivro);
+
+            if( ItemLocalizado != null)
+            {
+                Lista.Remove(ItemLocalizado);
+                Salvar(Lista);
+            }
+        }
+        public bool Existe(String key)
+        {
+            if (_cookie.Existe(key))
+            {
+                return false;
+            }
+            return true;
+        }
+        public void RemoverTodos()
+        {
+            _cookie.Remover(Key);
         }
     }
 }
