@@ -42,7 +42,7 @@ namespace ProjetoEmprestimoAspCore.CarrinhoCompra
 
                 if(ItemLocalizado != null)
                 {
-                    ItemLocalizado.qtd = item.qtd;
+                    ItemLocalizado.qtd = item.qtd +1;
                 }
                 else
                 {
@@ -71,7 +71,8 @@ namespace ProjetoEmprestimoAspCore.CarrinhoCompra
             var Lista = Consultar();
             var ItemLocalizado = Lista.SingleOrDefault(a => a.idLivro == item.idLivro);
 
-            if( ItemLocalizado != null)
+            
+            if (ItemLocalizado != null)
             {
                 Lista.Remove(ItemLocalizado);
                 Salvar(Lista);

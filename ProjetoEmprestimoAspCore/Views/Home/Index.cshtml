@@ -27,7 +27,7 @@
                             </div>
                             <div class="card-footer space-between-flex" style="width:90%">
                                 <div>
-                                    @using (Html.BeginForm("AdicionarItem", "Livro", FormMethod.Post))
+                                    @using (Html.BeginForm("AdicionarItem", "Home", FormMethod.Post))
                                     {
                                         <input type="hidden" name="id" value="@item.idLivro" />
                                         <input type="hidden" name="quantidade" value="1" />

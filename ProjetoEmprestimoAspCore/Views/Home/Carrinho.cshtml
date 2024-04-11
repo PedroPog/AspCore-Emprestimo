@@ -54,7 +54,7 @@
                                 </td>
                                 <td></td>
                                 <td class="text-right">
-                                    <a asp-controller="Livro" asp-action="RemoverItem" asp-route-id="@item.idLivro" class="btn btn-outline-danger">x Remove</a>
+                                    <a asp-controller="Home" asp-action="RemoverItem" asp-route-id="@item.idLivro" class="btn btn-outline-danger">x Remove</a>
                                 </td>
                             </tr>
                         }
@@ -71,12 +71,12 @@
     <br />
     <div class="row">
         <div class="col-md-12">
-            Deseja adicionar outro? <a asp-controller="Livro" asp-action="Index">Clique aqui</a> para continuar ....
+            Deseja adicionar outro? <a asp-controller="Home" asp-action="Index">Clique aqui</a> para continuar ....
         </div>
         <br />
         <br />
         <div class="offset-md-4 col-md-4">
-            <a class="btn btn-outline-primary btn-continuar-comprando" asp-action="SalvarCarrinho" asp-controller="Livro">
+            <a class="btn btn-outline-primary btn-continuar-comprando" asp-action="SalvarCarrinho" asp-controller="Home">
                 Finalziar o Empréstimo
             </a>
         </div>
